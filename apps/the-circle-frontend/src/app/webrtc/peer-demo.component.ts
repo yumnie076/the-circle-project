@@ -32,8 +32,12 @@ export class PeerDemoComponent implements OnInit {
     const localStream = await this.peerService.getLocalStream();
     this.localVideo.nativeElement.srcObject = localStream;
 
-    this.peerService.onOpen(id => (this.peerId = id));
+    this.peerService.onOpen(id => {
+      console.log('[PeerDemo] my id', id);
+      this.peerId = id;
+    });
     this.peerService.listen(localStream, stream => {
+      console.log('[PeerDemo] received remote stream');
       this.remoteVideo.nativeElement.srcObject = stream;
     });
   }
@@ -41,6 +45,7 @@ export class PeerDemoComponent implements OnInit {
   async startCall(id: string): Promise<void> {
     const localStream = await this.peerService.getLocalStream();
     this.peerService.call(id, localStream).on('stream', stream => {
+      console.log('[PeerDemo] call received remote stream');
       this.remoteVideo.nativeElement.srcObject = stream;
     });
   }
