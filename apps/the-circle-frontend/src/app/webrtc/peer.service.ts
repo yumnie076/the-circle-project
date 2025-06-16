@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Peer, { MediaConnection } from 'peerjs';
+import { environment } from '@avans-nx-workshop/shared/util-env';
 
 @Injectable({ providedIn: 'root' })
 export class PeerService {
@@ -9,8 +10,8 @@ export class PeerService {
   private ensurePeer(): Peer {
     if (!this.peer) {
       this.peer = new Peer(undefined, {
-        host: 'localhost',
-        port: 9000,
+        host: environment.PEER_SERVER_HOST,
+        port: environment.PEER_SERVER_PORT,
         path: '/'
       });
     }
