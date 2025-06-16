@@ -9,7 +9,7 @@ export class PeerService {
 
   private ensurePeer(): Peer {
     if (!this.peer) {
-      this.peer = new Peer(undefined, {
+      this.peer = new Peer( {
         host: environment.PEER_SERVER_HOST,
         port: environment.PEER_SERVER_PORT,
         path: '/'
@@ -20,8 +20,19 @@ export class PeerService {
   }
 
   async getLocalStream(): Promise<MediaStream> {
-    return navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.error('[PeerService] getUserMedia not supported');
+      throw new Error('Camera/microfoon wordt niet ondersteund in deze context (geen HTTPS of localhost)');
+    }
+
+    try {
+      return await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    } catch (err) {
+      console.error('[PeerService] getUserMedia failed', err);
+      throw err;
+    }
   }
+
 
   call(remoteId: string, stream: MediaStream): MediaConnection {
     const peer = this.ensurePeer();

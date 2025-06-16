@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PeerService } from './peer.service';
 
 @Component({
-  selector: 'avans-peer-demo',
+  selector: 'avans-nx-workshop-peer-demo',
   standalone: true,
   imports: [CommonModule],
   template: `

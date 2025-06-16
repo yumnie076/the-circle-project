@@ -8,6 +8,6 @@ export const environment: IEnvironment = {
 
     MONGO_DB_CONNECTION_STRING: 'dummy',
 
-    PEER_SERVER_HOST: 'localhost',
+  PEER_SERVER_HOST: '145.49.45.89',
     PEER_SERVER_PORT: 9000
 };
